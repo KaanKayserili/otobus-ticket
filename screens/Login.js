@@ -1,7 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { TouchableOpacity } from 'react-native'
-import { TextInput } from 'react-native'
+import React from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const Login = ({ navigation }) => {
     return (
