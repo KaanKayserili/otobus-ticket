@@ -24,7 +24,6 @@ const App = () => {
     }
   };
 
-
   return (
     <NavigationContainer onStateChange={handleNavigationStateChange}>
       <Stack.Navigator initialRouteName="Login" screenOptions={screenOptions} >
