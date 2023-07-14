@@ -10,7 +10,7 @@ const ListItem = ({ item }) => {
         }}>
             <View>
                 <Image source={item.brand}
-                    style={{ width: width * 0.25, height: width * 0.04 }} />
+                    style={{ width: width * 0.25, height: width * 0.1 }} />
             </View>
             <Text style={{ width: width * 0.25, textAlign: "center", fontSize: 14, color: "#212121" }}>{item.time}</Text>
             <Text style={{ width: width * 0.25, textAlign: "center", fontSize: 14, color: "#212121" }}>{item.count} koltuk</Text>
