@@ -26,18 +26,18 @@ const Details = ({ navigation, route }) => {
             <View style={styles.radioButtonContainer}>
                 <View style={styles.chooseWay}>
                     <Text style={styles.text}>Erkek</Text>
-                    <RadioButton value='male' status={checked === 'male' ? 'checked' : 'unchecked'}
+                    <RadioButton size={18} value='male' status={checked === 'male' ? 'checked' : 'unchecked'}
                         onPress={() => setChecked('male')} color='#00BBFF' />
                 </View>
 
                 <View style={styles.chooseWay}>
                     <Text style={styles.text}>Kadın</Text>
-                    <RadioButton value='female' status={checked === 'female' ? 'checked' : 'unchecked'}
+                    <RadioButton size={18} value='female' status={checked === 'female' ? 'checked' : 'unchecked'}
                         onPress={() => setChecked('female')} color='#FF77BB' />
                 </View>
             </View>
 
-            <Text style={{ textAlign: "center", marginBottom: "5%" }}>Koltuk No: {seatNumber}</Text>
+            <Text style={{ textAlign: "center", marginBottom: "5%", fontSize: 18 }}>Koltuk No: {seatNumber}</Text>
 
             <TouchableOpacity style={{
                 backgroundColor: "FF6102", padding: 5, borderRadius: 10, backgroundColor: "#FF6102",
@@ -68,6 +68,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: "100%",
         marginVertical: "5%",
+    },
+    text: {
+        fontSize: 18,
     },
     chooseWay: {
         flexDirection: "row",
