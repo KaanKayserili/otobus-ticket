@@ -9,6 +9,7 @@ import ListSeats from '../components/listSeats'
 const Details = ({ navigation, route }) => {
     const { item } = route.params;
     const [checked, setChecked] = useState('male');
+    const [seatNumber, setSeatNumber] = useState("1/A");
 
 
     return (
@@ -20,7 +21,7 @@ const Details = ({ navigation, route }) => {
             </View>
 
             <View style={{ flexDirection: "row", width: "90%", marginLeft: "5%", borderWidth: 2.5, borderColor: "rgba(33, 33, 33, 0.1)", borderRadius: 30, padding: "5%" }}>
-                <ListSeats />
+                <ListSeats setSeatNumber={setSeatNumber} />
             </View>
             <View style={styles.radioButtonContainer}>
                 <View style={styles.chooseWay}>
@@ -36,7 +37,7 @@ const Details = ({ navigation, route }) => {
                 </View>
             </View>
 
-            <Text style={{ textAlign: "center", marginBottom: "5%" }}>Koltuk No: {item.id}</Text>
+            <Text style={{ textAlign: "center", marginBottom: "5%" }}>Koltuk No: {seatNumber}</Text>
 
             <TouchableOpacity style={{
                 backgroundColor: "FF6102", padding: 5, borderRadius: 10, backgroundColor: "#FF6102",
