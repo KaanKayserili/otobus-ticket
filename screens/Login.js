@@ -1,9 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image } from 'react-native';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Dimensions } from 'react-native';
+import AwesomeAlert from 'react-native-awesome-alerts';
 const { width } = Dimensions.get("window");
 
 const Login = ({ navigation }) => {
+
+    const [mail, setMail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertTitle, setAlertTitle] = useState("Başarılı!");
+    const [alertMessage, setAlertMessage] = useState("Ödemeniz Başarı ile tamamlanmıştır.");
+
+    const logining = () => {
+        if (mail.length !== 0 && password !== 0) {
+            if ((/^[^\s@]+@[^\s@]+\.[^\s@]+$/).test(mail) == true) {
+                if (password.length >= 6) {
+                    navigation.navigate("Search");
+                }
+                else {
+                    setShowAlert(true);
+                    setAlertTitle("Hata!");
+                    setAlertMessage("Şifreniz yanlış");
+                }
+            }
+            else {
+                setShowAlert(true);
+                setAlertTitle("Hata!");
+                setAlertMessage("Girdiğiniz E-Mail adresi geçersiz");
+            }
+        }
+        else {
+            setShowAlert(true);
+            setAlertTitle("Hata!");
+            setAlertMessage("Kutucukları Lütfen Boş Bırakmayınız.");
+        }
+    }
     return (
         <View style={styles.container}>
 
@@ -11,8 +44,11 @@ const Login = ({ navigation }) => {
             <Text style={styles.title}>Hoşgeldiniz!</Text>
 
             <View style={styles.inputContainer}>
-                <TextInput style={styles.input} placeholder={"Mail Adresiniz"} />
-                <TextInput style={styles.input} placeholder={"Şifreniz"} />
+                <TextInput style={styles.input} placeholder={"Mail Adresiniz"} value={mail}
+                    keyboardType={"email-address"} onChangeText={(mail) => setMail(mail)} autoCapitalize="none" />
+
+                <TextInput style={styles.input} placeholder={"Şifreniz"} value={password} secureTextEntry={true}
+                    onChangeText={(password) => setPassword(password)} autoCapitalize="none" />
             </View>
 
             <View style={styles.buttonContainer}>
@@ -20,10 +56,29 @@ const Login = ({ navigation }) => {
                     <Text style={styles.buttonText}>Kayıt Ol</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate("Search") }}>
+                <TouchableOpacity style={styles.button} onPress={logining}>
                     <Text style={styles.buttonText}>Giriş Yap</Text>
                 </TouchableOpacity>
             </View>
+
+            <AwesomeAlert
+                show={showAlert}
+                showProgress={false}
+                title={alertTitle}
+                message={alertMessage}
+                showConfirmButton={true}
+                confirmText="Tamam"
+                confirmButtonColor="#FF2400"
+                onConfirmPressed={() => {
+                    setShowAlert(false);
+                }}
+                titleStyle={{ fontSize: 24, fontWeight: "500" }}
+                messageStyle={{ fontSize: 18 }}
+                confirmButtonTextStyle={{ fontSize: 18, fontWeight: "700", paddingHorizontal: 12.5 }}
+                confirmButtonStyle={{ borderRadius: 25, }}
+                contentContainerStyle={{ borderRadius: 20 }}
+            />
+
         </View>
     )
 }

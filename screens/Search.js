@@ -3,10 +3,43 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { RadioButton } from 'react-native-paper'
 import Header from '../components/header'
+import AwesomeAlert from 'react-native-awesome-alerts'
 
 const Search = ({ navigation }) => {
 
     const [checked, setChecked] = useState('going');
+
+    const [here, setHere] = useState("");
+    const [going, setGoing] = useState("");
+    const [goingTurnTime, setGoingTurnTime] = useState("");
+    const [goingTime, setGoingTime] = useState("");
+
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertTitle, setAlertTitle] = useState("");
+    const [alertMessage, setAlertMessage] = useState("");
+
+    const listingQuery = () => {
+        if (here !== "" && going !== "" && ((/^(0?[1-9]|[12][0-9]|3[01])[-/.](0?[1-9]|1[0-2])[-/.](19|20)\d\d$/).test(goingTime) == true)) {
+            if (checked == "round-trip") {
+                if (((/^(0?[1-9]|[12][0-9]|3[01])[-/.](0?[1-9]|1[0-2])[-/.](19|20)\d\d$/).test(goingTurnTime) == true)) {
+                    navigation.navigate("Listing");
+                }
+                else {
+                    setShowAlert(true);
+                    setAlertTitle("Hata!");
+                    setAlertMessage("Kutucukları Lütfen Boş Bırakmayınız ve/veya Yanlış Doldurmayınız.");
+                }
+            }
+            else {
+                navigation.navigate("Listing");
+            }
+        }
+        else {
+            setShowAlert(true);
+            setAlertTitle("Hata!");
+            setAlertMessage("Kutucukları Lütfen Boş Bırakmayınız.");
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -29,11 +62,11 @@ const Search = ({ navigation }) => {
             <View style={styles.goContainer}>
                 <View style={styles.chooseWhere}>
                     <Text style={styles.text}>Nereden</Text>
-                    <TextInput style={styles.inputWhere} />
+                    <TextInput style={styles.inputWhere} value={here} onChangeText={(here) => setHere(here)} />
                 </View>
 
                 <View style={styles.chooseWhere}>
-                    <TextInput style={styles.inputWhere} />
+                    <TextInput style={styles.inputWhere} value={going} onChangeText={(going) => setGoing(going)} />
                     <Text style={styles.text}>Nereye</Text>
                 </View>
             </View>
@@ -41,19 +74,38 @@ const Search = ({ navigation }) => {
             <View style={styles.dateContainer}>
                 <View style={styles.goDateContainer}>
                     <Text style={styles.text}>Gidiş Tarihi</Text>
-                    <TextInput style={styles.input} />
+                    <TextInput style={styles.input} value={goingTime} onChangeText={(goingTime) => setGoingTime(goingTime)} />
                 </View>
 
-                <View style={styles.goDateContainer}>
-                    <Text style={styles.text}>Dönüş Tarihi</Text>
-                    <TextInput style={styles.input} />
-                </View>
+                {checked == "round-trip" ?
+                    <View style={styles.goDateContainer}>
+                        <Text style={styles.text}>Dönüş Tarihi</Text>
+                        <TextInput style={styles.input} value={goingTurnTime} onChangeText={(goingTurnTime) => setGoingTurnTime(goingTurnTime)} />
+                    </View> : null}
             </View>
 
-            <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate("Listing") }}>
+            <TouchableOpacity style={styles.button} onPress={listingQuery}>
                 <Text style={styles.buttonText}>Ara</Text>
                 <Ionicons name={"search"} size={20} color={"white"} />
             </TouchableOpacity>
+
+            <AwesomeAlert
+                show={showAlert}
+                showProgress={false}
+                title={alertTitle}
+                message={alertMessage}
+                showConfirmButton={true}
+                confirmText="Tamam"
+                confirmButtonColor="#FF2400"
+                onConfirmPressed={() => {
+                    setShowAlert(false);
+                }}
+                titleStyle={{ fontSize: 24, fontWeight: "500" }}
+                messageStyle={{ fontSize: 18 }}
+                confirmButtonTextStyle={{ fontSize: 18, fontWeight: "700", paddingHorizontal: 12.5 }}
+                confirmButtonStyle={{ borderRadius: 25, }}
+                contentContainerStyle={{ borderRadius: 20 }}
+            />
         </View>
     )
 }
