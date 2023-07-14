@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         flexDirection: "column",
-        justifyContent: "center",
+        paddingTop: 28,
     },
     processContainer: {
         alignItems: "center"
@@ -45,11 +45,10 @@ const styles = StyleSheet.create({
         paddingVertical: "5%",
     },
     input: {
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderRadius: 10,
+        padding: 10,
+        borderRadius: 40,
         backgroundColor: "lightgray",
-        marginVertical: "5%",
+        marginVertical: "3%",
     },
     button: {
         backgroundColor: "#FF6102",

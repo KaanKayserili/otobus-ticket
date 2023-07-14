@@ -4,9 +4,8 @@ import Header from '../components/header';
 import { TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native';
 
-const Pay = (props) => {
-    const { item } = props.route.params;
-    const { navigation } = props.route.params;
+const Pay = ({ navigation, route }) => {
+    const { item } = route.params;
     return (
         <View style={styles.container}>
             <Header navigation={navigation} title={"Ödeme Ekranı"} />

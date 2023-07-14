@@ -1,9 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Dimensions } from 'react-native';
+const { width } = Dimensions.get("window");
 
 const Login = ({ navigation }) => {
     return (
         <View style={styles.container}>
+
+            <Image source={require("../assets/images/yanmazbilet.png")} style={{ width: width * 0.43296, height: width * 0.41184 }} />
             <Text style={styles.title}>Hoşgeldiniz!</Text>
 
             <View style={styles.inputContainer}>
@@ -37,18 +41,18 @@ const styles = StyleSheet.create({
     title: {
         textAlign: "center",
         fontSize: 32,
-        fontWeight: "bold",
+        fontWeight: "600",
+        color: "#FF6101"
     },
     inputContainer: {
         width: "80%",
         paddingVertical: "5%",
     },
     input: {
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderRadius: 10,
+        padding: 10,
+        borderRadius: 40,
         backgroundColor: "lightgray",
-        marginVertical: "5%",
+        marginVertical: "3%",
     },
     buttonContainer: {
         width: "80%",
@@ -57,8 +61,8 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: "#FF6102",
-        padding: 7.5,
-        borderRadius: 15,
+        padding: 8,
+        borderRadius: 24,
         width: "35%",
     },
     buttonText: {

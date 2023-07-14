@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { RadioButton } from 'react-native-paper'
 import Header from '../components/header'
 import ListItem from '../components/listItem'
-import listings from '../components/listings'
+import ListSeats from '../components/listSeats'
 
 const Details = ({ navigation, route }) => {
     const { item } = route.params;
@@ -19,31 +19,20 @@ const Details = ({ navigation, route }) => {
                 <ListItem item={item} />
             </View>
 
-            <View style={{ flexDirection: "row" }}>
-                {listings.map((index) => {
-                    <View key={index} style={{ flexDirection: "column", }}>
-                        <View>
-                            <TouchableOpacity></TouchableOpacity>
-                            <TouchableOpacity></TouchableOpacity>
-                        </View>
-
-                        <View><TouchableOpacity></TouchableOpacity></View>
-                    </View>
-                })
-                }
+            <View style={{ flexDirection: "row", width: "90%", marginLeft: "5%", borderWidth: 2.5, borderColor: "rgba(33, 33, 33, 0.1)", borderRadius: 30, padding: "5%" }}>
+                <ListSeats />
             </View>
-
             <View style={styles.radioButtonContainer}>
                 <View style={styles.chooseWay}>
                     <Text style={styles.text}>Erkek</Text>
                     <RadioButton value='male' status={checked === 'male' ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked('male')} color='blue' />
+                        onPress={() => setChecked('male')} color='#00BBFF' />
                 </View>
 
                 <View style={styles.chooseWay}>
                     <Text style={styles.text}>Kadın</Text>
                     <RadioButton value='female' status={checked === 'female' ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked('female')} color='pink' />
+                        onPress={() => setChecked('female')} color='#FF77BB' />
                 </View>
             </View>
 
