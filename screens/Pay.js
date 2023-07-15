@@ -34,9 +34,8 @@ const Pay = ({ navigation, route }) => {
                 setAlertMessage("CVC/CVC2 güvenlik kodunuzu yanlış girdiniz!");
             }
             else {
-                setShowAlert(true);
-                setAlertTitle("Başarılı!");
-                setAlertMessage("Ödemeniz Başarıyla Tamamlandı!");
+                alert("Ödemeniz Başarıyla tamamlanmıştr.", "Başarılı!");
+                navigation.navigate("Search");
             }
         }
         else {
