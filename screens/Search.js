@@ -1,9 +1,11 @@
 import { Ionicons } from '@expo/vector-icons'
 import React, { useState } from 'react'
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Modal, Dimensions } from 'react-native'
+import DatePicker from "react-native-modern-datepicker";
 import { RadioButton } from 'react-native-paper'
 import Header from '../components/header'
 import AwesomeAlert from 'react-native-awesome-alerts'
+const { width } = Dimensions.get("window")
 
 const Search = ({ navigation }) => {
 
@@ -14,9 +16,14 @@ const Search = ({ navigation }) => {
     const [goingTurnTime, setGoingTurnTime] = useState("");
     const [goingTime, setGoingTime] = useState("");
 
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [showTurnDatePicker, setShowTurnDatePicker] = useState(false);
+
     const [showAlert, setShowAlert] = useState(false);
     const [alertTitle, setAlertTitle] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
+
+    const [isLogOut, setIsLogOut] = useState(false);
 
     const listingQuery = () => {
         if (here !== "" && going !== "" && ((/^(0?[1-9]|[12][0-9]|3[01])[-/.](0?[1-9]|1[0-2])[-/.](19|20)\d\d$/).test(goingTime) == true)) {
@@ -41,9 +48,66 @@ const Search = ({ navigation }) => {
         }
     }
 
+    const openDatePicker = () => {
+        setShowDatePicker(true);
+    };
+
+    const openTurnDatePicker = () => {
+        setShowTurnDatePicker(true);
+    }
+
+    const closeDatePicker = () => {
+        setShowDatePicker(false);
+        setShowTurnDatePicker(false);
+    };
+
+    const handleDateChange = (date) => {
+        setGoingTime(date);
+    };
+
+    const handleTurnDateChange = (date) => {
+        setGoingTurnTime(date);
+    };
+
     return (
         <View style={styles.container}>
             <Header title={"Bilet Arama"} navigation={navigation} />
+
+            <Modal visible={showDatePicker} animationType="slide" transparent>
+                <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                    <View style={{ backgroundColor: 'white' }}>
+                        <DatePicker
+                            mode='calendar'
+                            selected={goingTime}
+                            onDateChange={handleDateChange}
+                            options={{ mainColor: "#FF6101" }}
+                            current={goingTime}
+                            selectorStartingYear={2023}
+                        />
+                        <TouchableOpacity style={[styles.button, { marginBottom: "5%" }]} onPress={closeDatePicker}>
+                            <Text style={styles.buttonText}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+
+            <Modal visible={showTurnDatePicker} animationType="slide" transparent>
+                <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                    <View style={{ backgroundColor: 'white' }}>
+                        <DatePicker
+                            mode='calendar'
+                            selected={goingTurnTime}
+                            onDateChange={handleTurnDateChange}
+                            options={{ mainColor: "#FF6101" }}
+                            current={goingTime}
+                            selectorStartingYear={2023}
+                        />
+                        <TouchableOpacity style={[styles.button, { marginBottom: "5%" }]} onPress={closeDatePicker}>
+                            <Text style={styles.buttonText}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
 
             <View style={styles.radioButtonContainer}>
                 <View style={styles.chooseWay}>
@@ -72,16 +136,20 @@ const Search = ({ navigation }) => {
             </View>
 
             <View style={styles.dateContainer}>
-                <View style={styles.goDateContainer}>
+                <TouchableOpacity onPress={openDatePicker} style={{ marginRight: "5%", flexDirection: "column", alignItems: "center" }}>
                     <Text style={styles.text}>Gidiş Tarihi</Text>
-                    <TextInput style={styles.input} value={goingTime} onChangeText={(goingTime) => setGoingTime(goingTime)} />
-                </View>
+                    <Text style={{ color: "#777777", backgroundColor: "lightgray", paddingVertical: 15, borderRadius: 40, marginVertical: "3%", width: width * 0.4, textAlign: "center" }}>
+                        {goingTime === "" ? "Gidiş Tarihi Seçiniz" : goingTime}
+                    </Text>
+                </TouchableOpacity>
 
                 {checked == "round-trip" ?
-                    <View style={styles.goDateContainer}>
+                    <TouchableOpacity onPress={openTurnDatePicker} style={{ flexDirection: "column", alignItems: "center", }}>
                         <Text style={styles.text}>Dönüş Tarihi</Text>
-                        <TextInput style={styles.input} value={goingTurnTime} onChangeText={(goingTurnTime) => setGoingTurnTime(goingTurnTime)} />
-                    </View> : null}
+                        <Text style={{ color: "#777777", backgroundColor: "lightgray", paddingVertical: 15, borderRadius: 40, marginVertical: "3%", width: width * 0.4, textAlign: "center" }}>
+                            {goingTurnTime === "" ? "Dönüş Tarihi Seçiniz" : goingTurnTime}
+                        </Text>
+                    </TouchableOpacity> : null}
             </View>
 
             <TouchableOpacity style={styles.button} onPress={listingQuery}>
@@ -155,15 +223,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         marginBottom: "10%",
-    },
-    goDateContainer: {
-        flexDirection: "column",
-        alignItems: "center",
-        width: "50%",
-    },
-    chooseDate: {
-        flexDirection: "row",
-        alignItems: "center",
     },
     input: {
         width: "80%",

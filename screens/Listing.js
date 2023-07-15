@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Header from '../components/header';
 import ListItem from '../components/listItem';
-import listings from '../components/listings';
+import listings from '../utils/listings';
 import { TouchableOpacity } from 'react-native';
 
 const Listing = ({ navigation }) => {
