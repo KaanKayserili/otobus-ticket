@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
         backgroundColor: "lightgray",
         marginVertical: "3%",
     },
-
     radioButtonContainer: {
         flexDirection: "row",
         justifyContent: 'space-around',

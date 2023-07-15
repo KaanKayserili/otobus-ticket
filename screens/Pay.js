@@ -1,9 +1,8 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import Header from '../components/header';
-import { TouchableOpacity } from 'react-native';
-import { TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import DatePicker from "react-native-modern-datepicker";
+import Header from '../components/header';
 
 const { width } = Dimensions.get("window");
 
@@ -13,14 +12,16 @@ const Pay = ({ navigation, route }) => {
     const [cardNo, setCardNo] = useState("");
     const [cardName, setCardName] = useState("");
     const [cvc, setCVC] = useState("");
-    const [date, setDate] = useState("");
+    const [skt, setSKT] = useState("");
+
+    const [showDatePicker, setShowDatePicker] = useState(false);
 
     const [showAlert, setShowAlert] = useState(false);
     const [alertTitle, setAlertTitle] = useState("Başarılı!");
     const [alertMessage, setAlertMessage] = useState("Ödemeniz Başarı ile tamamlanmıştır.");
 
     const paying = () => {
-        if (cardNo !== "" && cardName !== "" && cvc !== "" && date !== "") {
+        if (cardNo !== "" && cardName !== "" && cvc !== "" && skt !== "") {
             if (cardNo.length !== 16) {
                 setShowAlert(true);
                 setAlertTitle("Hata!");
@@ -31,16 +32,6 @@ const Pay = ({ navigation, route }) => {
                 setShowAlert(true);
                 setAlertTitle("Hata!");
                 setAlertMessage("CVC/CVC2 güvenlik kodunuzu yanlış girdiniz!");
-            }
-            else if (date.length !== 5) {
-                setShowAlert(true);
-                setAlertTitle("Hata!");
-                setAlertMessage("Kart son kullanım tarihini yanlış girdiniz!");
-            }
-            else if (date.charAt(2) !== "/") {
-                setShowAlert(true);
-                setAlertTitle("Hata!");
-                setAlertMessage("Kart son kullanım tarihini yanlış girdiniz!");
             }
             else {
                 setShowAlert(true);
@@ -55,9 +46,43 @@ const Pay = ({ navigation, route }) => {
         }
     }
 
+    const openDatePicker = () => {
+        setShowDatePicker(true);
+    };
+
+    const closeDatePicker = () => {
+        setShowDatePicker(false);
+    };
+
+    const handleDateChange = (date) => {
+        setSKT(date);
+    };
+
+    useEffect(() => {
+        console.log(skt)
+    }, [skt])
+
     return (
         <View style={styles.container}>
             <Header navigation={navigation} title={"Ödeme Ekranı"} />
+
+            <Modal visible={showDatePicker} animationType="slide" transparent>
+                <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                    <View style={{ backgroundColor: 'white' }}>
+                        <DatePicker
+                            mode={'calendar'}
+                            selected={skt}
+                            onDateChange={handleDateChange}
+                            options={{ mainColor: "#FF6101" }}
+                            current={skt}
+                            selectorStartingYear={2023}
+                        />
+                        <TouchableOpacity style={[styles.button, { alignSelf: "center", marginBottom: "5%" }]} onPress={closeDatePicker}>
+                            <Text style={styles.buttonText}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
 
             <View style={styles.creditCard}>
                 <View style={{
@@ -66,16 +91,23 @@ const Pay = ({ navigation, route }) => {
                 }}></View>
 
                 <View>
-                    <TextInput style={[styles.input, { width: "85%" }]} placeholder='Kart Numarası'
+                    <TextInput style={[styles.input, { width: width * 0.6, marginVertical: width * 0.01 }]} placeholder='Kart Numarası'
                         keyboardType='phone-pad' maxLength={16} value={cardNo} onChangeText={(cardNo) => setCardNo(cardNo)} />
-                    <TextInput style={[styles.input, { width: "85%" }]} placeholder='Kart Üzerindeki İsim'
+                    <TextInput style={[styles.input, { width: width * 0.6, marginVertical: width * 0.01 }]} placeholder='Kart Üzerindeki İsim'
                         value={cardName} onChangeText={(cardName) => setCardName(cardName)} />
 
                     <View style={styles.creditCardDateCVC}>
-                        <TextInput style={[styles.input, { width: "40%" }]} placeholder='CVC' keyboardType='phone-pad'
+                        <TextInput style={[styles.input, { width: width * 0.275, marginVertical: width * 0.01 }]} placeholder='CVC' keyboardType='phone-pad'
                             maxLength={3} value={cvc} onChangeText={(cvc) => setCVC(cvc)} />
-                        <TextInput style={[styles.input, { width: "40%", marginLeft: "5%" }]} placeholder='Tarih'
-                            keyboardType='phone-pad' maxLength={5} value={date} onChangeText={(date) => setDate(date)} />
+
+                        <TouchableOpacity onPress={openDatePicker}>
+                            <Text style={{
+                                color: "#777777", backgroundColor: "lightgray", paddingHorizontal: 10,
+                                paddingVertical: 7.5, borderRadius: 10, marginVertical: width * 0.01, width: width * 0.275, marginLeft: width * 0.05,
+                            }}>
+                                {skt === "" ? "SKT" : skt}
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -137,7 +169,18 @@ const styles = StyleSheet.create({
         paddingVertical: 2.5,
         borderRadius: 10,
         backgroundColor: "#dadddd",
-        marginVertical: "1%",
         color: "#111111"
+    },
+    button: {
+        backgroundColor: "#FF6102",
+        padding: 7.5,
+        borderRadius: 15,
+        width: "50%",
+    },
+    buttonText: {
+        fontSize: 20,
+        fontWeight: "800",
+        color: "white",
+        textAlign: "center",
     }
 })

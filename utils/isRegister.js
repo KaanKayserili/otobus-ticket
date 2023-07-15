@@ -20,11 +20,6 @@ export const isRegister = (name, surname, tc, birth, gender, mail, password, pas
             setAlertTitle("Başarısız!");
             setAlertMessage("TC Kimlik Numaranızı doğru giriniz.")
         }
-        else if ((/^(0?[1-9]|[12][0-9]|3[01])[-/.](0?[1-9]|1[0-2])[-/.](19|20)\d\d$/).test(birth) === false) {
-            setShowAlert(true);
-            setAlertTitle("Başarısız!");
-            setAlertMessage("Doğum tarihinizi yanlış formatta girdiniz.")
-        }
         else if ((gender !== "male") && (gender !== "female")) {
             setShowAlert(true);
             setAlertTitle("Başarısız!");

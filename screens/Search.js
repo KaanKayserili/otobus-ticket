@@ -23,18 +23,16 @@ const Search = ({ navigation }) => {
     const [alertTitle, setAlertTitle] = useState("");
     const [alertMessage, setAlertMessage] = useState("");
 
-    const [isLogOut, setIsLogOut] = useState(false);
-
     const listingQuery = () => {
-        if (here !== "" && going !== "" && ((/^(0?[1-9]|[12][0-9]|3[01])[-/.](0?[1-9]|1[0-2])[-/.](19|20)\d\d$/).test(goingTime) == true)) {
+        if (here !== "" && going !== "" && goingTime !== "") {
             if (checked == "round-trip") {
-                if (((/^(0?[1-9]|[12][0-9]|3[01])[-/.](0?[1-9]|1[0-2])[-/.](19|20)\d\d$/).test(goingTurnTime) == true)) {
+                if (goingTurnTime !== "") {
                     navigation.navigate("Listing");
                 }
                 else {
                     setShowAlert(true);
                     setAlertTitle("Hata!");
-                    setAlertMessage("Kutucukları Lütfen Boş Bırakmayınız ve/veya Yanlış Doldurmayınız.");
+                    setAlertMessage("Kutucukları Lütfen Boş Bırakmayınız.");
                 }
             }
             else {
