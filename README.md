@@ -1,5 +1,7 @@
 ﻿# otobus-ticket
 <div>
+<img src="https://github.com/KaanKayserili/otobus-ticket/blob/main/assets/images/yanmazbilet.png" alt="otobus-ticket" height="500" />
+<img src="https://github.com/KaanKayserili/otobus-ticket/blob/main/assets/screenshots/Screenshot_1689452405.png" alt="otobus-ticket" height="500" />
 <img src="https://github.com/KaanKayserili/otobus-ticket/blob/main/assets/screenshots/Screenshot_1689452782.png" alt="otobus-ticket" height="500" />
 <img src="https://github.com/KaanKayserili/otobus-ticket/blob/main/assets/screenshots/Screenshot_1689452939.png" alt="otobus-ticket" height="500" />
 <img src="https://github.com/KaanKayserili/otobus-ticket/blob/main/assets/screenshots/Screenshot_1689452945.png" alt="otobus-ticket" height="500" />
